@@ -1,4 +1,6 @@
+const {db} = require('./db')
 //import your db
+const db = require('./db')
 //import your models
 
 //state your model associations (hasOne etc)
