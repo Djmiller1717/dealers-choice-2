@@ -1,12 +1,15 @@
 import React from "react"
+import axios from 'axios'
+import store from './store'
 //import any sub-components
 
 export default class App extends React.Component {
-	//constructor to initialize state
 	constructor(){
 		super()
 	}
-	//any lifecycle methods
-	//any custom methods
-	//render
+	render(){
+		return (
+			<hr></hr>
+		)
+	}
 }
