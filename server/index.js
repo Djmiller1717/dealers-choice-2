@@ -10,7 +10,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')))
 
-app.get('/ingredients', async (req, res, next) => {
+app.get('/api/ingredients', async (req, res, next) => {
     try {
         const ingredients = await Ingredient.findAll()
         res.send(ingredients)
@@ -19,7 +19,7 @@ app.get('/ingredients', async (req, res, next) => {
     }
 })
 
-app.get('/ingredients/:id', async (req, res, next) => {
+app.get('/api/ingredients/:id', async (req, res, next) => {
     try {
         const ingredient = await Ingredient.findByPk(req.params.id)
         res.send(ingredient)

@@ -16,7 +16,7 @@ const getIngredients = (ingredients) => {
 }
 
 const thunkGetIngredients = () => async(dispatch) => {
-    const {data} = await axios.get('/ingredients')
+    const {data} = await axios.get('/api/ingredients')
     dispatch(getIngredients(data))
 }
 

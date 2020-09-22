@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 
-const Ingredients = () => {
+const Ingredients = ({ingredients}) => {
     return (
         <ul>
 			{ingredients.map(ingredient => {
@@ -14,4 +14,12 @@ const Ingredients = () => {
 		</ul>
 		
     )
-})
+}
+
+const mapStateToProps = (state) => {
+	return {
+		ingredients: state.ingredients
+	}
+}
+
+export default connect(mapStateToProps)(Ingredients)

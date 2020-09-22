@@ -2,6 +2,8 @@ import React from "react"
 import axios from 'axios'
 import {connect} from 'react-redux'
 import store, {thunkGetIngredients} from './store'
+import Ingredients from './Ingredients'
+import {HashRouter as Router, Route} from 'react-router-dom'
 
 //import any sub-components
 
@@ -13,16 +15,13 @@ class App extends React.Component {
 		this.props.loadIngredients();
 	}
 	render(){
-		const ingredients = this.props.ingredients
-		console.log(ingredients)
 		return (
-			<ul>
-				{ingredients.map(ingredient => {
-					return (
-					<li key = {ingredient.id}>{ingredient.name}</li>
-					)
-				})}
-			</ul>
+			<Router>
+				<div>
+					<Route path='/' exact component={Ingredients} />
+					<Route path='/ingredients' component={Ingredients} />
+				</div>
+			</Router>
 		)
 	}
 }
@@ -35,10 +34,10 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		ingredients: state.ingredients
-	}
-}
+// const mapStateToProps = (state) => {
+// 	return {
+// 		ingredients: state.ingredients
+// 	}
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(null, mapDispatchToProps)(App)
