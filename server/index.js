@@ -28,6 +28,15 @@ app.get('/api/ingredients/:id', async (req, res, next) => {
     }
 })
 
+app.post('/api/ingredients', async (req, res, next) => {
+    try {
+        const ingredient = await Ingredient.create({name: req.body.ingredient})
+        res.send(ingredient)
+    } catch(err) {
+        next(err)
+    }
+})
+
 const PORT = 3000
 
 const init = async function(){

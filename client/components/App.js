@@ -2,8 +2,10 @@ import React from "react"
 import axios from 'axios'
 import {connect} from 'react-redux'
 import store, {thunkGetIngredients} from './store'
-import Ingredients from './Ingredients'
 import {HashRouter as Router, Route} from 'react-router-dom'
+
+import Homepage from './Homepage'
+import Ingredients from './Ingredients'
 
 //import any sub-components
 
@@ -18,7 +20,7 @@ class App extends React.Component {
 		return (
 			<Router>
 				<div>
-					<Route path='/' exact component={Ingredients} />
+					<Route path='/' exact component={Homepage} />
 					<Route path='/ingredients' component={Ingredients} />
 				</div>
 			</Router>
