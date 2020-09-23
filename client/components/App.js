@@ -6,6 +6,7 @@ import {HashRouter as Router, Route} from 'react-router-dom'
 
 import Homepage from './Homepage'
 import Ingredients from './Ingredients'
+import Ingredient from './Ingredient'
 
 //import any sub-components
 
@@ -21,7 +22,11 @@ class App extends React.Component {
 			<Router>
 				<div>
 					<Route path='/' exact component={Homepage} />
-					<Route path='/ingredients' component={Ingredients} />
+					<Route path='/ingredients' exact component={Ingredients} />
+					{/* <Route path='/ingredients/:id' render={props => {
+						<Ingredient {...props} 
+					}}/> */}
+					<Route path='/ingredients/:id' component={Ingredient} />
 				</div>
 			</Router>
 		)

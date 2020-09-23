@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {thunkAddIngredient} from './store'
+import Ingredient from './Ingredient'
 
 class Ingredients extends Component{ 
     constructor(){
@@ -13,8 +14,7 @@ class Ingredients extends Component{
         this.add = this.add.bind(this)
     }
     add(ev){
-       ev.preventDefault(); 
-       console.log(this.state)
+       ev.preventDefault();
        this.props.addIngredient(this.state.name)
        this.setState({name: ''})
     }
@@ -22,7 +22,6 @@ class Ingredients extends Component{
         const {ingredients} = this.props
         const {name} = this.state
         const {add} = this
-        console.log(ingredients)
         return (
             <div>
                 <h3>Ingredients:</h3>
@@ -33,7 +32,11 @@ class Ingredients extends Component{
                 <ul>
                     {ingredients.map(ingredient => {
                         return (
-                            <li key = {ingredient.id}>{ingredient.name}</li>
+                            <li key = {ingredient.id}>
+                                <Link to={`/ingredients/${ingredient.id}`}>
+                                    {ingredient.name}
+                                </Link>
+                            </li>
                             )
                         })}
                 </ul>

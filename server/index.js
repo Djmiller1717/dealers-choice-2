@@ -37,6 +37,15 @@ app.post('/api/ingredients', async (req, res, next) => {
     }
 })
 
+app.delete(`/api/ingredients/:id`, async(req, res, next) => {
+    try {
+        await Ingredient.destroy({where: {id: req.params.id}})
+        res.sendStatus(204)
+    } catch(err){
+        next(err)
+    }
+})
+
 const PORT = 3000
 
 const init = async function(){

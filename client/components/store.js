@@ -8,6 +8,7 @@ const initialState = {
 
 const GET_INGREDIENTS = 'GET_INGREDIENTS'
 const ADD_INGREDIENT = 'ADD_INGREDIENT'
+const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
 
 const getIngredients = (ingredients) => {
     return {
@@ -22,6 +23,13 @@ const addIngredient = (ingredient) => {
         ingredient
     }
 }
+
+const removeIngredient = (id) => {
+    return {
+        type: REMOVE_INGREDIENT,
+        id
+    }
+}
  
 const thunkGetIngredients = () => async(dispatch) => {
     const {data} = await axios.get('/api/ingredients')
@@ -31,7 +39,11 @@ const thunkGetIngredients = () => async(dispatch) => {
 const thunkAddIngredient = (ingredient) => async(dispatch) => {
     const response = await axios.post('/api/ingredients', {ingredient})
     dispatch(addIngredient(response.data))
-    //history.push('/ingredients')
+}
+
+const thunkRemoveIngredient = (id) => async(dispatch) => {
+    await axios.delete(`/api/ingredients/${id}`)
+    dispatch(removeIngredient(id))
 }
 
 function reducer(state = initialState, action){
@@ -40,6 +52,9 @@ function reducer(state = initialState, action){
             return {...state, ingredients: action.ingredients}
         case ADD_INGREDIENT:
             return {...state, ingredients: [...state.ingredients, action.ingredient]}
+        case REMOVE_INGREDIENT:
+            const ingredients = state.ingredients.filter(ingredient => ingredient.id !== action.id*1)
+            return {...state, ingredients}
         default:
             return state
     }
@@ -51,4 +66,4 @@ function reducer(state = initialState, action){
 
 const store = createStore(reducer, applyMiddleware(thunk))
 export default store
-export {thunkGetIngredients, thunkAddIngredient}
+export {thunkGetIngredients, thunkAddIngredient, thunkRemoveIngredient}
