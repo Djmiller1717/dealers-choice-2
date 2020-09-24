@@ -9,6 +9,7 @@ const initialState = {
 const GET_INGREDIENTS = 'GET_INGREDIENTS'
 const ADD_INGREDIENT = 'ADD_INGREDIENT'
 const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
+const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT'
 
 const getIngredients = (ingredients) => {
     return {
@@ -30,6 +31,13 @@ const removeIngredient = (id) => {
         id
     }
 }
+
+const updateIngredient = (ingredient) => {
+    return {
+        type: UPDATE_INGREDIENT,
+        ingredient
+    }
+}
  
 const thunkGetIngredients = () => async(dispatch) => {
     const {data} = await axios.get('/api/ingredients')
@@ -37,6 +45,7 @@ const thunkGetIngredients = () => async(dispatch) => {
 }
 
 const thunkAddIngredient = (ingredient) => async(dispatch) => {
+    //What is the ingredient here???
     const response = await axios.post('/api/ingredients', {ingredient})
     dispatch(addIngredient(response.data))
 }
@@ -44,6 +53,11 @@ const thunkAddIngredient = (ingredient) => async(dispatch) => {
 const thunkRemoveIngredient = (id) => async(dispatch) => {
     await axios.delete(`/api/ingredients/${id}`)
     dispatch(removeIngredient(id))
+}
+
+const thunkUpdateIngredient = (ingredient) => async(dispatch) => {
+    const {data} = await axios.put(`/api/ingredients/${ingredient.id}`)
+    dispatch(updateIngredient(data))
 }
 
 function reducer(state = initialState, action){
@@ -55,6 +69,9 @@ function reducer(state = initialState, action){
         case REMOVE_INGREDIENT:
             const ingredients = state.ingredients.filter(ingredient => ingredient.id !== action.id*1)
             return {...state, ingredients}
+        case UPDATE_INGREDIENT:
+            const newIngredients = state.ingredients.map(ingredient => ingredient.id === action.ingredient.id ? action.ingredient : ingredient)
+            return {...state, ingredients: newIngredients}
         default:
             return state
     }
@@ -66,4 +83,4 @@ function reducer(state = initialState, action){
 
 const store = createStore(reducer, applyMiddleware(thunk))
 export default store
-export {thunkGetIngredients, thunkAddIngredient, thunkRemoveIngredient}
+export {thunkGetIngredients, thunkAddIngredient, thunkRemoveIngredient, thunkUpdateIngredient}

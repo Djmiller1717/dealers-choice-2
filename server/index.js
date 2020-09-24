@@ -46,6 +46,16 @@ app.delete(`/api/ingredients/:id`, async(req, res, next) => {
     }
 })
 
+app.put('/api/ingredients/:id', async(req, res, next) => {
+    try {
+        const ingredient = await Ingredient.findByPk(req.params.id)
+        await ingredient.update(req.body)
+        res.send(ingredient)
+    } catch(err){
+        next(err)
+    }
+})
+
 const PORT = 3000
 
 const init = async function(){
